@@ -46,12 +46,15 @@ def generate_icon() -> Path:
     painter.end()
 
     # 先输出 PNG，再用 Pillow 生成多尺寸 ICO
-    png_path = ROOT / "_icon_tmp.png"
+    packaging_dir = ROOT / "packaging"
+    packaging_dir.mkdir(exist_ok=True)
+
+    png_path = packaging_dir / "_icon_tmp.png"
     px.save(str(png_path))
 
     from PIL import Image
 
-    ico_path = ROOT / "icon.ico"
+    ico_path = packaging_dir / "icon.ico"
     with Image.open(str(png_path)) as img:
         img.save(
             str(ico_path),
